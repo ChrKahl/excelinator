@@ -1,5 +1,5 @@
 module Excelinator
-  MIME_TYPE = 'application/vnd.ms-excel'
+  MIME_TYPE = 'application/vnd.ms-excel'.freeze
 
   # Detects HTML table content (with a rather stupid regex: /<table/) and re-uses it, or attempts to convert from
   # CSV if HTML not detected.
@@ -7,8 +7,8 @@ module Excelinator
     content =~ /<table/ ? Excelinator.html_as_xls(content) : Excelinator.csv_to_xls(content)
   end
 
-def self.csv_to_xls(csv_content, separator=",")
-    ary = (!old_ruby? ? CSV : FasterCSV).parse(csv_content, { :col_sep => separator} )
+  def self.csv_to_xls(csv_content, separator = ',')
+    ary = (!old_ruby? ? CSV : FasterCSV).parse(csv_content, col_sep: separator)
 
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
@@ -21,21 +21,20 @@ def self.csv_to_xls(csv_content, separator=",")
     book.write(ios)
     content
   end
-  
-  #memory ftw
-  def self.csv_to_xls_file(csv_path, file, separator=",")
+
+  def self.csv_to_xls_file(csv_path, file, separator = ',')
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
 
-    CSV.open(csv_path, { :col_sep => separator} ) do |csv|
+    CSV.open(csv_path, col_sep: separator) do |csv|
       index = 0
       csv.each do |raw_row|
         row = sheet.row(index)
         row.push(*raw_row)
-        index +=1
+        index += 1
       end
     end
-    
+
     book.write(file)
     file
   end
@@ -49,7 +48,7 @@ def self.csv_to_xls(csv_content, separator=",")
   # contents will be returned.
   #
   # If you don't have need of utf-8 encoding, or want to prepend that yourself, there's no need to use this method.
-  def self.html_as_xls(html_content, options={})
+  def self.html_as_xls(html_content, options = {})
     encoding_meta_tag = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'
     encoding_meta_tag + (options.delete(:do_not_strip) ? html_content : html_content.scan(/<table.*\/table>/mi).join)
   end
