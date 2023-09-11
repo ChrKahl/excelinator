@@ -3,12 +3,12 @@
 require "#{File.dirname(__FILE__)}/lib/excelinator/version"
 
 Gem::Specification.new do |s|
-  s.name        = 'excelinator'
+  s.name        = 'excelinator_ruby3'
   s.version     = Excelinator::VERSION
-  s.authors     = %w[chrismo jwhitmire]
-  s.email       = %w[chrismo@clabs.org jeff@jwhitmire.com]
-  s.homepage    = 'https://github.com/livingsocial/excelinator'
-  s.summary     = 'Excel Converter'
+  s.authors     = %w[ChrKahl chrismo jwhitmire]
+  s.email       = %w[ChristophKahl@gmx.de chrismo@clabs.org jeff@jwhitmire.com]
+  s.homepage    = 'https://github.com/chrkahl/excelinator'
+  s.summary     = 'Excel Converter for ruby version 3'
   s.description = 'convert your csv data and html tables to excel data'
 
   s.add_dependency('fastercsv') if RUBY_VERSION < '1.9'
