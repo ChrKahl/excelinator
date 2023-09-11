@@ -1,8 +1,9 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 require "#{File.dirname(__FILE__)}/spec_helper"
 require 'benchmark'
 
+# rubocop:disable Metrics/BlockLength
 describe Excelinator do
   let(:table) do
     table = <<-HTML
@@ -23,6 +24,8 @@ describe Excelinator do
       "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1".force_encoding('US-ASCII')
     when /^2/
       "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1\x00\x00"
+    when /^3/
+      "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"
     end
   end
 
@@ -35,7 +38,7 @@ describe Excelinator do
     Excelinator.html_as_xls("<body>#{table}<hr/>#{table}</body>").should == utf8 + "#{table}<hr/>#{table}"
   end
 
-  it 'should allow option to not strip out table since this will be an expensive memory operation for a huge HTML file' do
+  it 'should allow option to not strip out table since this\'ll be an expensive memory operation for a big HTML file' do
     Excelinator.html_as_xls("<body>#{table}</body>", do_not_strip: true).should == utf8 + "<body>#{table}</body>"
   end
 
@@ -47,7 +50,8 @@ describe Excelinator do
     compare_string = one_two_three_xls
 
     # mini-gold standard test: pre-calculated the Excel header bytes and merely that part to match
-    Excelinator.convert_content([1, 2, 3].join(','))[0..7].should == compare_string
+    expect(Excelinator.convert_content([1, 2, 3].join(','))[0..7].force_encoding('UTF-8'))
+      .to eq(compare_string.force_encoding('UTF-8'))
   end
 
   it 'should not take a very long time to detect CSV content' do
@@ -60,3 +64,4 @@ describe Excelinator do
     Benchmark.realtime { Excelinator.convert_content(large_html) }.should < 1.0
   end
 end
+# rubocop:enable Metrics/BlockLength

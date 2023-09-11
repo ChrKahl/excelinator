@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Excelinator module
 module Excelinator
   MIME_TYPE = 'application/vnd.ms-excel'
