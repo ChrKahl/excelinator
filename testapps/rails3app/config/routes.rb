@@ -1,7 +1,8 @@
-Rails3app::Application.routes.draw do
+# frozen_string_literal: true
 
+Rails3app::Application.routes.draw do
   match ':controller(/:action(.:format))'
-  root :to => 'foo#empty'
+  root to: 'foo#empty'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.12'
-gem 'excelinator', :path => '../..'
+gem 'excelinator', path: '../..'
 gem 'fastercsv'
+gem 'rails', '3.0.12'
 gem 'spreadsheet'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 
 # Use unicorn as the web server
 # gem 'unicorn'

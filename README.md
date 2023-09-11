@@ -1,10 +1,13 @@
-Excelinator
-===========
+# Excelinator Fork
+
+> Fork of [Excelinator](https://github.com/livingsocial/excelinator) to run with
+rails 7 and ruby 3.2.1 due to changes in the `CSV.parse(..)` method.
+
 Small gem for generating _real_ Excel spreadsheets from existing CSV data and
 HTML tables that fully supports UTF-8 characters.
 
-Why?
-----
+## Why?
+
 Well, when you're starting up and things are small and then things grow and
 then people want reports and they'd like them in Excel most of the time and
 then you realize you can just throw some cheap CSV views at them and Excel
@@ -18,40 +21,40 @@ except they all like merge back to that one spreadsheet gem, and you could go
 XMLDoc maybe, but then it's just like lemme use the CSV I've already got and
 try to not make me work much?
 
-No Rails Required
------------------
+## No Rails Required
+
 The heart of this gem has a couple of small methods to handle the
 transformations. If that's all you need, you're good to go.
 
-###CSV
+### CSV
 
 Call `Excelinator.csv_to_xls(csv_content)`. The csv_content will be parsed by
 FasterCSV and converted to Excel spreadsheet contents ready to be saved to
 file or sent across the wire.
 
-If you have a lot of CSV content and don't want to do all of this work in 
+If you have a lot of CSV content and don't want to do all of this work in
 memory, call `Excelinator.csv_to_xls_file(csv_path, file)`, passing the path to
-the CSV file and a path to the .xls file you'd like the workbook saved to. 
+the CSV file and a path to the .xls file you'd like the workbook saved to.
 (contributed by [maxwell](https://github.com/maxwell))
 
-If you want the CSV Data not to be separated by ',' (as it is by default) you can call 
-`Excelinator.csv_to_xls_file(csv_path, file, ";")` or 
+If you want the CSV Data not to be separated by ',' (as it is by default) you can call
+`Excelinator.csv_to_xls_file(csv_path, file, ";")` or
 `Excelinator.csv_to_xls(csv_content, ";")` or with any other separator char.
 
-###HTML
+### HTML
 
 Call `Excelinator.html_as_xls(html_content)`. The table element from the HTML
 content is extracted, a meta tag indicating utf-8 encoding is prepended and
 that's it. The resulting content isn't actually an Excel spreadsheet, just the
 HTML data. But write this out to a file with an .xls extension and Excel will
 open the contents and translate the `<table>` for you, formatting and all.
-	
+
 _NOTE: While some spreadsheet programs (e.g. Google Docs) will not translate
 HTML tables like this, both Excel on Windows and Mac will as well as
 OpenOffice._
 
-But I Need Rails
-----------------
+## But I Need Rails
+
 As you wish. As always, [TMTOWTDI](http://en.wikipedia.org/wiki/There's_more_than_one_way_to_do_it),
 but here are a few usage options. All examples work in Rails 2 and 3, except
 where noted.

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class FooController < ApplicationController
   def index
-    redirect_to :action => :empty
+    redirect_to action: :empty
   end
 
   def empty
@@ -20,21 +22,18 @@ class FooController < ApplicationController
   end
 
   def respond_to_html_only
-    respond_to do |format|
-      format.html
-      # other requested formats will return a 406
-    end
+    respond_to(&:html)
   end
 
   def respond_to_all
     # here's how to re-use a CSV view
     respond_to do |format|
       format.html
-      format.csv { render :partial => 'all.erb' }
-      format.xls {
+      format.csv { render partial: 'all.erb' }
+      format.xls do
         partial = params[:render_from] == 'html' ? 'all.html.erb' : 'all.erb'
-        send_xls_data('respond_to_all.xls', :partial => partial, :locals => {:arabic_only => true})
-      }
+        send_xls_data('respond_to_all.xls', partial:, locals: { arabic_only: true })
+      end
     end
   end
 end

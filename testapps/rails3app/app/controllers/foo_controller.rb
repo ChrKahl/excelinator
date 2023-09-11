@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class FooController < ApplicationController
   def index
-    redirect_to :action => :empty
+    redirect_to action: :empty
   end
 
   def empty
@@ -15,26 +17,23 @@ class FooController < ApplicationController
 
   def xls_view_respond_to
     respond_to do |format|
-      format.xls { render :xls => 'xls_view_respond_to.xls' }
+      format.xls { render xls: 'xls_view_respond_to.xls' }
     end
   end
 
   def respond_to_html_only
-    respond_to do |format|
-      format.html
-      # other requested formats should return a 406? They do in Rails 2 - wha happen?
-    end
+    respond_to(&:html)
   end
 
   def respond_to_all
     # here's how to re-use a CSV view
     respond_to do |format|
       format.html
-      format.csv { render :partial => 'all.erb' }
-      format.xls {
+      format.csv { render partial: 'all.erb' }
+      format.xls do
         partial = params[:render_from] == 'html' ? 'all.html' : 'all'
-        render :xls => 'respond_to_all.xls', :partial => partial, :locals => {:arabic_only => true}
-      }
+        render xls: 'respond_to_all.xls', partial:, locals: { arabic_only: true }
+      end
     end
   end
 
@@ -42,7 +41,7 @@ class FooController < ApplicationController
     respond_to do |format|
       format.html
       format.csv
-      format.xls { render :xls => 'no_partial.xls', :template => 'foo/no_partial.csv.erb' }
+      format.xls { render xls: 'no_partial.xls', template: 'foo/no_partial.csv.erb' }
     end
   end
 end

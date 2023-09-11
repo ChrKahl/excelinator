@@ -1,8 +1,10 @@
-require File.dirname(__FILE__) + '/spec_helper'
+# frozen_string_literal: true
+
+require "#{File.dirname(__FILE__)}/spec_helper"
 require 'benchmark'
 
 describe Excelinator do
-  let(:table) {
+  let(:table) do
     table = <<-HTML
         <table>
           <tr>
@@ -11,44 +13,44 @@ describe Excelinator do
         </table>
     HTML
     table.strip
-  }
+  end
   let(:utf8) { '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">' }
-  let(:one_two_three_xls) {
-    one_two_three_xls = case RUBY_VERSION
-                          when /^1.8/
-                            "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"
-                          when /^1.9/
-                            "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1".force_encoding('US-ASCII')
-                          when /^2/
-                            "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1\x00\x00"
-                        end
-  }
+  let(:one_two_three_xls) do
+    case RUBY_VERSION
+    when /^1.8/
+      "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"
+    when /^1.9/
+      "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1".force_encoding('US-ASCII')
+    when /^2/
+      "\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1\x00\x00"
+    end
+  end
 
-  it "should strip out table" do
+  it 'should strip out table' do
     Excelinator.html_as_xls("<body>#{table}</body>").should == utf8 + table
   end
 
-  it "should strip out multiple tables" do
+  it 'should strip out multiple tables' do
     # TODO: this will grab any html in between tables - should be smarter about that
     Excelinator.html_as_xls("<body>#{table}<hr/>#{table}</body>").should == utf8 + "#{table}<hr/>#{table}"
   end
 
-  it "should allow option to not strip out table since this will be an expensive memory operation for a huge HTML file" do
-    Excelinator.html_as_xls("<body>#{table}</body>", :do_not_strip => true).should == utf8 + "<body>#{table}</body>"
+  it 'should allow option to not strip out table since this will be an expensive memory operation for a huge HTML file' do
+    Excelinator.html_as_xls("<body>#{table}</body>", do_not_strip: true).should == utf8 + "<body>#{table}</body>"
   end
 
-  it "should detect table and convert as html" do
+  it 'should detect table and convert as html' do
     Excelinator.convert_content("<body>#{table}</body>").should == utf8 + table
   end
 
-  it "should not detect table and convert CSV" do
+  it 'should not detect table and convert CSV' do
     compare_string = one_two_three_xls
 
     # mini-gold standard test: pre-calculated the Excel header bytes and merely that part to match
     Excelinator.convert_content([1, 2, 3].join(','))[0..7].should == compare_string
   end
 
-  it "should not take a very long time to detect CSV content" do
+  it 'should not take a very long time to detect CSV content' do
     # this test verifies a quick HTML regex. Previously, the 'strip table' regex was used and that's too expensive
     # for detection in the case of large HTML content (at least double, though progressively worse as size increased)
     #

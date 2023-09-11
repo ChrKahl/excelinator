@@ -1,11 +1,14 @@
+# frozen_string_literal: true
+
 module Excelinator
+  # register as rails module
   module Rails
     def self.setup
       require 'action_controller'
 
       Mime::Type.register Excelinator::MIME_TYPE, :xls
 
-      self.add_renderer if ::Rails::VERSION::MAJOR >= 3
+      add_renderer if ::Rails::VERSION::MAJOR >= 3
     end
 
     def self.add_renderer
@@ -14,11 +17,12 @@ module Excelinator
       end
     end
 
+    # Not rails module
     module ACMixin
-      def send_xls_data(filename, options={})
+      def send_xls_data(filename, options = {})
         content = render_to_string(options)
         xls_content = Excelinator.convert_content(content)
-        send_data(xls_content, :filename => filename, :type => Excelinator::MIME_TYPE, :disposition => 'inline')
+        send_data(xls_content, filename:, type: Excelinator::MIME_TYPE, disposition: 'inline')
       end
     end
   end

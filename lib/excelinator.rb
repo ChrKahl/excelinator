@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'excelinator/xls'
 require 'excelinator/rails'
 require 'excelinator/version'
@@ -15,7 +17,9 @@ end
 
 if defined?(Rails)
   Excelinator::Rails.setup
-  class ActionController::Base
-    include Excelinator::Rails::ACMixin
+  module ActionController
+    class Base
+      include Excelinator::Rails::ACMixin
+    end
   end
 end

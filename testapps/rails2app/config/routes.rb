@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 ActionController::Routing::Routes.draw do |map|
-  #map.connect ':controller/:action', :defaults => {:format => 'html'}
-  map.connect ':controller/:action.:format', :defaults => {:format => 'html'}
-  #map.connect ':controller/:action'
-  map.root :controller => 'foo', :action => 'empty'
+  # map.connect ':controller/:action', :defaults => {:format => 'html'}
+  map.connect ':controller/:action.:format', defaults: { format: 'html' }
+  # map.connect ':controller/:action'
+  map.root controller: 'foo', action: 'empty'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
