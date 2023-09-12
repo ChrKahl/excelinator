@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require "#{File.dirname(__FILE__)}/lib/excelinator/version"
+require "#{File.dirname(__FILE__)}/lib/excelinator_ruby3/version"
 
 Gem::Specification.new do |s|
   s.name        = 'excelinator_ruby3'
-  s.version     = Excelinator::VERSION
+  s.version     = ExcelinatorRuby3::VERSION
   s.authors     = %w[ChrKahl chrismo jwhitmire]
   s.email       = %w[ChristophKahl@gmx.de chrismo@clabs.org jeff@jwhitmire.com]
-  s.homepage    = 'https://github.com/chrkahl/excelinator'
+  s.homepage    = 'https://github.com/chrkahl/excelinator_ruby3'
   s.summary     = 'Excel Converter for ruby version 3'
   s.description = 'convert your csv data and html tables to excel data'
 

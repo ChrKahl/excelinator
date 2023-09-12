@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'excelinator/xls'
-require 'excelinator/rails'
-require 'excelinator/version'
+require 'excelinator_ruby3/xls'
+require 'excelinator_ruby3/rails'
+require 'excelinator_ruby3/version'
 require 'spreadsheet'
 
 def old_ruby?
@@ -16,10 +16,10 @@ else
 end
 
 if defined?(Rails)
-  Excelinator::Rails.setup
+  ExcelinatorRuby3::Rails.setup
   module ActionController
     class Base
-      include Excelinator::Rails::ACMixin
+      include ExcelinatorRuby3::Rails::ACMixin
     end
   end
 end

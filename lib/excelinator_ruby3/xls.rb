@@ -1,11 +1,11 @@
-# Excelinator module
-module Excelinator
+# ExcelinatorRuby3 module
+module ExcelinatorRuby3
   MIME_TYPE = 'application/vnd.ms-excel'
 
   # Detects HTML table content (with a rather stupid regex: /<table/) and re-uses it, or attempts to convert from
   # CSV if HTML not detected.
   def self.convert_content(content)
-    content =~ /<table/ ? Excelinator.html_as_xls(content) : Excelinator.csv_to_xls(content)
+    content =~ /<table/ ? ExcelinatorRuby3.html_as_xls(content) : ExcelinatorRuby3.csv_to_xls(content)
   end
 
   # rubocop:disable Metrics/MethodLength
